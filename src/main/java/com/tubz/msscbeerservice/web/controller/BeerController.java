@@ -3,6 +3,7 @@ package com.tubz.msscbeerservice.web.controller;
 import com.tubz.msscbeerservice.web.model.BeerDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -12,6 +13,7 @@ import java.util.UUID;
  */
 @RequestMapping("/api/v1/beer")
 @RestController
+@Validated
 public class BeerController {
 
     /**
@@ -33,7 +35,7 @@ public class BeerController {
      * @return created response.
      */
     @PostMapping
-    public ResponseEntity saveNewBeer(@RequestBody final BeerDto beerDto) {
+    public ResponseEntity saveNewBeer(@Validated @RequestBody final BeerDto beerDto) {
         // todo: impl
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
@@ -46,7 +48,7 @@ public class BeerController {
      * @return updated response.
      */
     @PutMapping("{beerId}")
-    public ResponseEntity updateBeerById(@PathVariable final UUID beerId, @RequestBody final BeerDto beerDto) {
+    public ResponseEntity updateBeerById(@PathVariable final UUID beerId, @Validated @RequestBody final BeerDto beerDto) {
         // todo: impl
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

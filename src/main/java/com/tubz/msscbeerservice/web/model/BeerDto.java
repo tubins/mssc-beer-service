@@ -31,7 +31,7 @@ public class BeerDto {
     private OffsetDateTime modifiedTime;
     @NotBlank
     private String beerName;
-    @NotBlank
+    @NotNull
     private BeerStyle beerStyle;
     @NotNull
     @Positive

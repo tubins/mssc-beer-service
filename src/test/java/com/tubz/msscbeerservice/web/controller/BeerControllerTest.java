@@ -1,14 +1,16 @@
 package com.tubz.msscbeerservice.web.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tubz.msscbeerservice.web.model.BeerDto;
+import com.tubz.msscbeerservice.web.model.BeerStyle;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -35,21 +37,27 @@ class BeerControllerTest {
 
     @Test
     void saveNewBeer() throws Exception {
-        BeerDto beerDto = BeerDto.builder().build();
-        String beerDtoJson = objectMapper.writeValueAsString(beerDto);
 
         mockMvc.perform(post("/api/v1/beer/")
-                        .contentType(MediaType.APPLICATION_JSON).content(beerDtoJson))
+                        .contentType(MediaType.APPLICATION_JSON).content(getBeerDtoJSON()))
                 .andExpect(status().isCreated());
     }
 
     @Test
     void updateBeerById() throws Exception {
-        BeerDto beerDto = BeerDto.builder().build();
-        String beerDtoJson = objectMapper.writeValueAsString(beerDto);
 
         mockMvc.perform(put("/api/v1/beer/" + UUID.randomUUID())
-                        .contentType(MediaType.APPLICATION_JSON).content(beerDtoJson))
+                        .contentType(MediaType.APPLICATION_JSON).content(getBeerDtoJSON()))
                 .andExpect(status().isNoContent());
+    }
+
+    private String getBeerDtoJSON() throws JsonProcessingException {
+        BeerDto beerDto = BeerDto.builder()
+                .id(null).beerName("Corona")
+                .upc(110L).beerStyle(BeerStyle.IPA)
+                .price(new BigDecimal("12.05"))
+                .build();
+        String beerDtoJson = objectMapper.writeValueAsString(beerDto);
+        return beerDtoJson;
     }
 }
