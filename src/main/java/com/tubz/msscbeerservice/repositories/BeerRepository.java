@@ -1,4 +1,4 @@
-package repositories;
+package com.tubz.msscbeerservice.repositories;
 
 import com.tubz.msscbeerservice.domain.Beer;
 import org.springframework.data.repository.PagingAndSortingRepository;
