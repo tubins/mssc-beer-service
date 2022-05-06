@@ -1,6 +1,8 @@
 package com.tubz.msscbeerservice.web.controller;
 
+import com.tubz.msscbeerservice.services.BeerService;
 import com.tubz.msscbeerservice.web.model.BeerDto;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -11,10 +13,13 @@ import java.util.UUID;
 /**
  * Beer controller.
  */
+@RequiredArgsConstructor
 @RequestMapping("/api/v1/beer")
 @RestController
 @Validated
 public class BeerController {
+
+    private final BeerService beerService;
 
     /**
      * API to get beer by Id.
@@ -24,8 +29,7 @@ public class BeerController {
      */
     @GetMapping("{beerId}")
     public ResponseEntity<BeerDto> getBeerById(@PathVariable final UUID beerId) {
-        // todo: impl
-        return new ResponseEntity<>(BeerDto.builder().build(), HttpStatus.OK);
+        return new ResponseEntity(beerService.getBeerById(beerId), HttpStatus.OK);
     }
 
     /**
@@ -36,8 +40,8 @@ public class BeerController {
      */
     @PostMapping
     public ResponseEntity saveNewBeer(@Validated @RequestBody final BeerDto beerDto) {
-        // todo: impl
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(beerService.saverNewBeer(beerDto),
+                HttpStatus.CREATED);
     }
 
     /**
@@ -49,7 +53,6 @@ public class BeerController {
      */
     @PutMapping("{beerId}")
     public ResponseEntity updateBeerById(@PathVariable final UUID beerId, @Validated @RequestBody final BeerDto beerDto) {
-        // todo: impl
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(beerService.updateBeer(beerId, beerDto), HttpStatus.NO_CONTENT);
     }
 }
